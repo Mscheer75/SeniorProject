@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+		<title> Chico iRepair Customer Database</title>
+		{% include "bootstrap.html" %}
+		<link href="{%static 'styles.css' %}" rel="stylesheet" type="text/css" />
+		<script type = "text/javascript" src="{%static 'myscripts.js' %}"></script>
+</head>
+<body>
+  <div id="movePiece" class="">
+  			<div>
+  				<input type="text" id="moveFrom" class="form-control" placeholder="Move from, EX: a1">
+  				<input type="text" id="moveTo" class="form-control" placeholder="Move to, EX: a3">
+  			</div>
+  		</div>
+  		<div id="buttons">
+  			<button class="btn btn-primary" onclick="movePiece()">Move Submit</button>
+  			<button class="btn btn-danger" onClick="history.go(0);"> Reset game</button>
+  		</div>
+
+</body>
+</html>

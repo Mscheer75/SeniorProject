@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+		<title> Chico iRepair Customer Database</title>
+		{% include "bootstrap.html" %}
+		<link href="{%static 'styles.css' %}" rel="stylesheet" type="text/css" />
+		<script type = "text/javascript" src="{%static 'myscripts.js' %}"></script>
+</head>
+<body>
+  {% include "nav.html" %}
+  <h1> Customer Registration</h1>
+  <div id="movePiece" class="">
+  		</div>
+  		<div id="buttons">
+        <form method="POST" >{% csrf_token %}
+						{{cust_form.as_p}}
+  			<button class="btn btn-primary" type="submit" name="custSubmit">Submit Customer</button>
+      </form>
+  		</div>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+body {
+background-color: #e6f3ff;
+border-width: 20px;
+border-style: outset;
+border-color: #CFC4FF;
+border-radius: 40px 40px 40px 0px;
+}
+
+p {
+text-align: center;
+font-size: 200%;
+}
+
+ol, ul {
+font-size: 200%;
+}
+
+td{
+
+width: 70px;
+height: 70px;
+text-align: center;
+font-size: 300%;
+
+}
+
+
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+
+	background: Beige;
+	justify-content: center;
+
+}
+
+
+
+.piece {
+	position: static;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	font-size: 200%;
+}
+#movePiece, #buttons{
+	display: flex;
+	justify-content: left;
+	align-items: left;
+	background-color:  white;
+	border-color: black;
+}
+
+div{
+	background-color: white;
+	Border: 1px solid black;
+	margin-right: auto;
+	margin-left: auto;
+}
+h1{
+	float: left;
+}
+
+.pic {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	border-width: 20px;
+	border-style: outset;
+	border-color: #219E65;
+	border-radius: 40px 40px 40px 0px;
+
+}
+#history {
+	margin-right: auto;
+	margin-left: auto;
+	font-size: 200%;
+	text-align: center;
+	border-style: outset;
+	background-color: #ffd9cc;
+	width: 1000px;
+}
+#steps {
+	border-width: 8px;
+	border-style: groove;
+	border-color: #2695de;
+	border-radius: 0px 40px 0px 40px;
+	background-color: #ffd9cc;
+	width: 1000px;
+}
+#moveset {
+	width: 1000px;
+	border-left-width: 9px;
+	border-left-style: outset;
+	border-color: #00b3b3;
+	background-color: #ffd9cc;
+}
+table{
+background: #dcdcf5;
+margin-right: auto;
+margin-left: auto;
+border-collapse: collapse;
+Border: 1px solid black;
+z-index: -1;
+
+}
