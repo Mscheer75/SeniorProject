@@ -15,6 +15,12 @@ ol, ul {
 font-size: 200%;
 }
 
+img {
+	width: 10%;
+	height: 10%;
+
+
+}
 td{
 
 width: 70px;
@@ -45,8 +51,10 @@ tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
 	display: flex;
 	justify-content: left;
 	align-items: left;
-	background-color:  white;
+	width: 280px;
+	background-color:  lightgrey;
 	border-color: black;
+
 }
 
 div{

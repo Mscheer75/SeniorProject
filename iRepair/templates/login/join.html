@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+		<title> Chico iRepair Customer Database</title>
+		{% include "bootstrap.html" %}
+		<link href="{%static 'styles.css' %}" rel="stylesheet" type="text/css" />
+		<script type = "text/javascript" src="{%static 'myscripts.js' %}"></script>
+</head>
+<body>
+{% include "nav.html" %}
+<img src="{%static 'logo.jpg' %}" alt="logo" align="right">
+<div class="container">
+  <div>
+    <h1>Join</h1>
+    <form method="POST">{% csrf_token %}
+      <table>
+        {{join_form.as_table}}
+        <tr><td>
+          <input type="submit" class="btn btn-primary" value="Join"/>
+        </td></tr>
+      </table>
+    </form>
+  </div>
+</div>
+</body>
+</html>

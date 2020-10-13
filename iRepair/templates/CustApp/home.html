@@ -9,10 +9,11 @@
 </head>
 <body>
   {% include "nav.html" %}
+  <img src="{%static 'logo.jpg' %}" alt="logo" align="right">
   <h1> Customer Registration</h1>
   <div id="movePiece" class="">
   		</div>
-  		<div id="buttons">
+  		<div id="buttons" >
         <form method="POST" >{% csrf_token %}
 						{{cust_form.as_p}}
   			<button class="btn btn-primary" type="submit" name="custSubmit">Submit Customer</button>

@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from CustApp import views as CustApp_views
+from login import views as login_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', CustApp_views.home, name='home'),
-    path('home/', CustApp_views.home, name='home'),
     path(r'device/', CustApp_views.device, name='device'),
     path(r'data/', CustApp_views.data, name='data'),
-    path(r'WorkOrder/', CustApp_views.WorkOrder, name='WorkOrder')
+    path(r'WorkOrder/', CustApp_views.WorkOrder, name='WorkOrder'),
+    path(r'join/',login_views.join, name='join'),
+    path(r'login/',login_views.user_login, name='user_login'),
+    path(r'logout/',login_views.user_logout, name='user_logout')
 ]

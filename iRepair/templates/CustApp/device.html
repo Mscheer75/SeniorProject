@@ -10,9 +10,10 @@
 <body>
   {% include "nav.html" %}
   <h1> Device Registration</h1>
+  <img src="{%static 'logo.jpg' %}" alt="logo" align="right">
   <div id="movePiece" class="">
   		</div>
-  		<div id="buttons">
+  		<div id="buttons" >
         <form method="POST" >{% csrf_token %}
 						{{dev_form.as_p}}
   			<button class="btn btn-primary" type="submit" name="deviceSubmit">Submit Customer</button>

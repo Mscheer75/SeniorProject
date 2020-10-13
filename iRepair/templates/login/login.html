@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+		<title> Chico iRepair Customer Database</title>
+		{% include "bootstrap.html" %}
+		<link href="{%static 'styles.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  {% include "nav.html" %}
+  <img src="{%static 'logo.jpg' %}" alt="logo" align="right">
+<div class="container">
+    <h1>Login</h1>
+    <form action="/login/" method="POST">{% csrf_token %}
+      <table>
+        {{login_form.as_table}}
+        <tr><td>
+          <input type="submit" class="btn btn-primary" value="Login"/>
+        </td></tr>
+      </table>
+    </form>
+</div>
+</body>
+</html>

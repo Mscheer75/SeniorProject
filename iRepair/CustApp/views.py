@@ -4,10 +4,11 @@ from CustApp.forms import customerForm
 from CustApp.forms import deviceForm
 from CustApp.models import Customer
 from CustApp.models import Device
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
-
+@login_required(login_url='/login/')
 def home(request):
 
     page_data = { "cust_form":customerForm}
@@ -28,9 +29,14 @@ def home(request):
     return render(request, 'CustApp/home.html', page_data)
 
 
+
+@login_required(login_url='/login/')
 def data(request):
     return render(request, 'CustApp/data.html')
 
+
+
+@login_required(login_url='/login/')
 def device(request):
 
     page_data = { "dev_form":deviceForm}
@@ -51,5 +57,7 @@ def device(request):
 
     return render(request, 'CustApp/device.html', page_data)
 
+    
+@login_required(login_url='/login/')
 def WorkOrder(request):
     return render(request, 'CustApp/WorkOrder.html')
