@@ -26,6 +26,6 @@ class WorkOrder(models.Model):
     PickedUp = models.BooleanField()
 
 class pageSettings(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     profile_setting_1 = models.BooleanField(default=False)
     profile_setting_2 = models.BooleanField(default=False)

@@ -27,6 +27,8 @@ urlpatterns = [
     path('flip/<int:id>/',CustApp_views.flip, name='flip'),
     path('flippick/<int:id>/',CustApp_views.flippick, name='flippick'),
     path(r'join/',login_views.join, name='join'),
+    path(r'completeTog/', CustApp_views.completeTog, name='completeTog'),
+    path(r'pickTog/', CustApp_views.pickTog, name='pickTog'),
     path(r'login/',login_views.user_login, name='user_login'),
     path(r'logout/',login_views.user_logout, name='user_logout')
 ]

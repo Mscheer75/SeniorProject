@@ -38,7 +38,21 @@ def cust(request):
 
 @login_required(login_url='/login/')
 def data(request):
-    return render(request, 'CustApp/data.html')
+    page_data= {"completed":0, "NotCompleted":0}
+
+    comp = 0
+    ncomp = 0
+    workList = WorkOrder.objects.all()
+    for item in workList:
+        if(item.Completed == True):
+            comp += 1
+        else:
+            ncomp +=1
+
+    page_data["completed"] = comp
+    page_data["NotCompleted"] = ncomp
+
+    return render(request, 'CustApp/data.html', page_data)
 
 
 
@@ -88,7 +102,18 @@ def flippick(request, id):
 @login_required(login_url='/login/')
 def WorkOrderView(request):
      #print("taskuser:",request.user)
-    page_data = {"dev_form":deviceForm, "cust_form":customerForm, "work_form":workForm,"workDict":[]}
+
+    user = request.user
+    if(pageSettings.objects.filter(user=user).exists()):
+        userProf = pageSettings.objects.get(user=user)
+    else:
+        user_profile = pageSettings();
+        user_profile.user = user
+        user_profile.save()
+
+    userProf = pageSettings.objects.get(user=user)
+
+    page_data = {"dev_form":deviceForm, "cust_form":customerForm, "work_form":workForm,"workDict":[], "toggleHeader":""}
     work_form = workForm(request.POST);
     cust_form = customerForm(request.POST);
     dev_form = deviceForm(request.POST);
@@ -149,7 +174,6 @@ def WorkOrderView(request):
         Completed = record.Completed
         PickedUp = record.PickedUp
 
-        print("if it is picked up: ",PickedUp)
 
         Completed = 'No'
         if( record.Completed == True):
@@ -176,18 +200,30 @@ def WorkOrderView(request):
         row['Completed'] = Completed
         row['PickedUp'] = PickedUp
         row[user] = record.user
-
-        page_data.get("workDict").append(row)
-
-
+        page_data["toggleHeader"] = "All Work orders"
+        if(userProf.profile_setting_1 == False and userProf.profile_setting_2 == False):
+            page_data.get("workDict").append(row)
+            page_data["toggleHeader"] = "All Work orders"
+        elif((userProf.profile_setting_1 == True and record.Completed == False) and userProf.profile_setting_2 == False):
+            page_data.get("workDict").append(row)
+            page_data["toggleHeader"] = "Work Orders that are not Completed"
+        elif((userProf.profile_setting_2 == True and record.PickedUp == False) and userProf.profile_setting_1 == False):
+            page_data.get("workDict").append(row)
+            page_data["toggleHeader"] = "Work Orders that have not been picked Up"
+        elif((userProf.profile_setting_1 == True and record.Completed == False) and (userProf.profile_setting_2 == True and record.PickedUp == False)):
+            page_data.get("workDict").append(row)
+            page_data["toggleHeader"] = "Work Orders that have not been Completed and have not been Picked Up"
+    print(page_data["toggleHeader"])
     return render(request, 'CustApp/WorkOrder.html', page_data)
 
 
 
 @login_required(login_url='/login/')
 def completeTog(request):
-    userProf = pageSettings.objects.get()
-    print("togle: ",userProf)
+    user = request.user
+
+    userProf = pageSettings.objects.get(user=user)
+
     if(userProf.profile_setting_1 == True):
         userProf.profile_setting_1 = False
     else:
@@ -199,14 +235,15 @@ def completeTog(request):
 
 @login_required(login_url='/login/')
 def pickTog(request):
+
     user = request.user
-    print("toggle user:", user)
-    userProf = UserProfile.objects.get(user=user)
-    print("togle: ",userProf)
-    if(userProf.profile_setting_1 == True):
-        userProf.profile_setting_1 = False
+
+    userProf = pageSettings.objects.get(user=user)
+
+    if(userProf.profile_setting_2 == True):
+        userProf.profile_setting_2 = False
     else:
-        userProf.profile_setting_1 = True
+        userProf.profile_setting_2 = True
 
     userProf.save()
 

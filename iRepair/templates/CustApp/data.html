@@ -4,13 +4,98 @@
     {% load static %}
 		<title> Chico iRepair Customer Database</title>
 		{% include "bootstrap.html" %}
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 		<link href="{%static 'styles.css' %}" rel="stylesheet" type="text/css" />
 		<script type = "text/javascript" src="{%static 'myscripts.js' %}"></script>
 </head>
 <body>
   {% include "nav.html" %}
   <img src="{%static 'logo.jpg' %}" alt="logo" align="right">
-  <h1>Data?</h1>
+  <h1>Data</h1>
+  <div id="movePiece" class="">
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="container-fluid">
+          <div class="jumbotron" id="header">
+            <div align="center">
+              <h3> Outstanding WorkOrders</h3>
+              <div class="ct-chart ct-perfect-fourth"></div>
+              <div id="backdrop">
+                <a id="NotCompleted">Not Done/</a><a id="Completed">Done</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="container-fluid">
+          <div class = "jumbotron" id="header">
+            <div align="center">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="container-fluid">
+          <div class = "jumbotron" id="header">
+            <div align="center">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <!--chart definition-->
+<script>
+  new Chartist.Pie('.ct-chart',
+  { labels: ['Completed', 'Pending'], series: [{{completed}}, {{NotCompleted}}] },
+  { labelInterpolationFnc: function(value) { return value[0] } },
+  [['screen', { chartPadding: .001, labelOffset: 40, labelDirection: 'explode',
+  labelInterpolationFnc: function(value) { return value;}}]]);
+</script>
+<script>
+
+    lab = []
+    pro = []
+    act = []
+    {% for Description,Projected,Actual in budgetList %}
+      lab.push('{{Description}}')
+      pro.push({{Projected}})
+      act.push({{Actual}})
+    {% endfor %}
+  var data = {
+
+
+  labels: lab,
+  series: [
+    pro,
+    act
+  ]
+};
+
+var options = {
+  seriesBarDistance: 10
+};
+
+var responsiveOptions = [
+  ['screen and (max-width: 640px)', {
+    seriesBarDistance: 5,
+    axisX: {
+      labelInterpolationFnc: function (value) {
+        return value[0];
+      }
+    }
+  }]
+];
+
+new Chartist.Bar('.ct-chartB', data, options, responsiveOptions);
+</script>
 
 </body>
 </html>
