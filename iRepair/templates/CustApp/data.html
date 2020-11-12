@@ -8,16 +8,9 @@
 		<script type = "text/javascript" src="{%static 'myscripts.js' %}"></script>
 </head>
 <body>
-  <div id="movePiece" class="">
-  			<div>
-  				<input type="text" id="moveFrom" class="form-control" placeholder="Move from, EX: a1">
-  				<input type="text" id="moveTo" class="form-control" placeholder="Move to, EX: a3">
-  			</div>
-  		</div>
-  		<div id="buttons">
-  			<button class="btn btn-primary" onclick="movePiece()">Move Submit</button>
-  			<button class="btn btn-danger" onClick="history.go(0);"> Reset game</button>
-  		</div>
+  {% include "nav.html" %}
+  <img src="{%static 'logo.jpg' %}" alt="logo" align="right">
+  <h1>Data?</h1>
 
 </body>
 </html>

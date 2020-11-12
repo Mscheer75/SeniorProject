@@ -1,8 +1,12 @@
 from django import forms
 from django.core import validators
+from CustApp.models import WorkOrder
 
 
-
+class workForm(forms.ModelForm):
+    class Meta:
+        model = WorkOrder
+        fields = ('TypeRepair',)
 
 class customerForm(forms.Form):
 

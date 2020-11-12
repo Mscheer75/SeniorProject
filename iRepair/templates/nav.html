@@ -1,13 +1,19 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Customer Registration</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="{% url 'device' %}">Device Registration</a></li>
-      <li><a href="{% url 'WorkOrder' %}">Create Workorder</a></li>
-      <li><a href="{% url 'data' %}">data</a></li>
-      <li><a href="/logout/">Logout</a></li>
+
+<nav class="navbar navbar-dark bg-dark  navbar-expand-lg">
+      <a class="navbar-brand" href="/">Create WorkOrder</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'cust' %}">Customer Registration</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'device' %}">Device Registration</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'data' %}">Data</a>
+      </li>
+
     </ul>
-  </div>
+    <form class="form-inline" action="/logout/">
+    <button class="btn btn-outline-danger" type="submit" id="log">Logout</button>
+    </form>
 </nav>

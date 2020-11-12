@@ -8,16 +8,50 @@
 		<script type = "text/javascript" src="{%static 'myscripts.js' %}"></script>
 </head>
 <body>
-  <div id="movePiece" class="">
-  			<div>
-  				<input type="text" id="moveFrom" class="form-control" placeholder="Move from, EX: a1">
-  				<input type="text" id="moveTo" class="form-control" placeholder="Move to, EX: a3">
-  			</div>
-  		</div>
-  		<div id="buttons">
-  			<button class="btn btn-primary" onclick="movePiece()">Move Submit</button>
-  			<button class="btn btn-danger" onClick="history.go(0);"> Reset game</button>
-  		</div>
+  {% include "nav.html" %}
+  <h1> Create WorkOrder</h1>
+  <div class="container h-100">
+    <img src="{%static 'logo.jpg' %}" alt="logo" align="right">
+    <div class="row h-100 justify-content-right align-items-right">
+      <div class="col-10 col-md-10 col-lg-10">
+  <div id="Buttons" class="jumbotron">
+  <form method="POST"  >{% csrf_token %}
+    <div class="div-to-align">
+        {{cust_form.as_p}}
+        {{dev_form.as_p}}
+        {{work_form.as_p}}
+    <button class="btn btn-primary" type="submit" name="workSubmit">Submit Customer</button>
+  </div>
+  </form>
+</div>
+</div>
+</div>
+</div>
+<table id="taskstable" align="center" class="">
+    <th>Work Order id</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Phone Number</th>
+    <th>Date brought in</th>
+    <th>Device Name</th>
+    <th>Type of Repair</th>
+    <th>Completed</th>
+    <th>Picked Up</th>
+    <th>Employee</th>
+    {% for row in workDict %}
+    <tr>
+    {% for key, value in row.items %}
+      {% if key == 'Completed' %}
+      <td><a id='flipcomp' href="/flip/{{row.id}}">{{value}}</a></td>
+      {% elif key == 'PickedUp' %}
+      <td><a id='flippick' href="/flippick/{{row.id}}">{{value}}</a></td>
+      {% else %}
+      <td id="{{key}}">{{value}}</td>
+      {% endif %}
+    {% endfor %}
+  </tr>
+    {% endfor %}
+  </table>
 
 </body>
 </html>

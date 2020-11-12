@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Customer(models.Model):
@@ -16,9 +17,15 @@ class Device(models.Model):
     Manufacture = models.CharField(max_length=30)
 
 class WorkOrder(models.Model):
-    Device = models.ForeignKey('Device', on_delete=models.CASCADE)
-    Customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
-    date = models.DateField()
-    Employee = models.CharField(max_length=30)
+    DeviceRepair = models.ForeignKey('Device', on_delete=models.CASCADE)
+    CustomerRepair = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     TypeRepair = models.CharField(max_length=100)
     Completed = models.BooleanField()
+    PickedUp = models.BooleanField()
+
+class pageSettings(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_setting_1 = models.BooleanField(default=False)
+    profile_setting_2 = models.BooleanField(default=False)

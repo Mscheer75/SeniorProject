@@ -20,10 +20,12 @@ from login import views as login_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', CustApp_views.home, name='home'),
+    path(r'cust/', CustApp_views.cust, name='cust'),
     path(r'device/', CustApp_views.device, name='device'),
     path(r'data/', CustApp_views.data, name='data'),
-    path(r'WorkOrder/', CustApp_views.WorkOrder, name='WorkOrder'),
+    path('', CustApp_views.WorkOrderView, name='WorkOrder'),
+    path('flip/<int:id>/',CustApp_views.flip, name='flip'),
+    path('flippick/<int:id>/',CustApp_views.flippick, name='flippick'),
     path(r'join/',login_views.join, name='join'),
     path(r'login/',login_views.user_login, name='user_login'),
     path(r'logout/',login_views.user_logout, name='user_logout')
