@@ -16,11 +16,13 @@
       <div class="col-11 col-md-11 col-lg-11">
   <div id="Buttons" class="jumbotron">
   <form method="POST"  >{% csrf_token %}
-    <div class="div-to-align">
-        {{cust_form.as_p}}
-        {{dev_form.as_p}}
-        {{work_form.as_p}}
-    <button class="btn btn-primary" type="submit" name="workSubmit">Submit Customer</button>
+    <div id ="WorkOrderForm">
+      <table>
+        {{cust_form.as_table}}
+        {{dev_form.as_table}}
+        {{work_form.as_table}}
+      </table>
+    <button class="btn btn-success" type="submit" name="workSubmit">Submit Customer</button>
   </div>
   </form>
 </div>

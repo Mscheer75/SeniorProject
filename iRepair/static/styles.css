@@ -14,7 +14,7 @@ th, td {
   padding: 8px;
 }
 
-tr:nth-child(even){background-color: lightblue}
+tr:nth-child(even){background-color: white}
 tr:nth-child(odd){background-color: white}
 
 h2, h1{
@@ -27,10 +27,21 @@ th {
   background-color: #0080FF;
   color: white;
 }
+.chart-container{
+  width: 500px !important;
+  height: 500px !important;
+}
 
 #entr{
    font-family: 'Syne Tactile', cursive;
 }
+
+#WorkOrderForm{
+  width: 80%;
+  border: 1px solid black;
+  background-color: white;
+}
+
 
 #login
 {

@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from CustApp.forms import customerForm
@@ -38,19 +39,60 @@ def cust(request):
 
 @login_required(login_url='/login/')
 def data(request):
-    page_data= {"completed":0, "NotCompleted":0}
+    page_data= {"completed":0, "NotCompleted":0,"picked":0, "NotPicked":0, "DevNames":[], "DevList":[], "dateList":[]}
+
+    today = datetime.date.today()
+    curDate = today.strftime("%Y-%m-%d")
 
     comp = 0
     ncomp = 0
+    pick = 0
+    notpick = 0
     workList = WorkOrder.objects.all()
+
+    dateRow = {}
+    dateNames = []
+    for i in range(7):
+        DateTitle = datetime.date.today() - datetime.timedelta(days=i)
+        for item in workList:
+            if( str(item.date) == str(DateTitle) and str(item.date) in dateNames):
+                dateRow[str(item.date)] += 1
+            elif(str(item.date) == str(DateTitle)):
+                dateNames.append(str(DateTitle))
+                dateRow[str(curDate)] = 1
+
+
+    print(dateNames)
+
     for item in workList:
         if(item.Completed == True):
             comp += 1
         else:
             ncomp +=1
 
+    for item in workList:
+        if(item.PickedUp == True):
+            pick += 1
+        else:
+            notpick +=1
+
+    devNames = []
+    row = {}
+
+    for workorder in workList:
+        if( workorder.DeviceRepair.Device_Name in devNames):
+            row[workorder.DeviceRepair.Device_Name] += 1
+        else:
+            devNames.append(workorder.DeviceRepair.Device_Name)
+            row[workorder.DeviceRepair.Device_Name] = 1
+
+    page_data.get("DevNames").append(devNames)
+    page_data.get("DevList").append(row)
+    page_data.get("dateList").append(dateRow)
     page_data["completed"] = comp
     page_data["NotCompleted"] = ncomp
+    page_data["NotPicked"] = notpick
+    page_data["picked"] = pick
 
     return render(request, 'CustApp/data.html', page_data)
 
@@ -69,7 +111,6 @@ def device(request):
             Color= dev_form.cleaned_data["Color"]
             Device_type = dev_form.cleaned_data["Device_type"]
             Manufacture = dev_form.cleaned_data["Manufacture"]
-
             Device(Device_Name=Device_Name, Color=Color, Device_type=Device_type, Model_Number=Model_Number, Manufacture=Manufacture).save()
         else:
             dev_data["dev_form"]=dev_form
@@ -127,6 +168,8 @@ def WorkOrderView(request):
             Color= dev_form.cleaned_data["Color"]
             Device_type = dev_form.cleaned_data["Device_type"]
             Manufacture = dev_form.cleaned_data["Manufacture"]
+            today = datetime.date.today()
+
 
             if (Device.objects.filter(Color=Color, Device_Name=Device_Name, Model_Number=Model_Number, Device_type=Device_type).exists()):
                 print("Object exsits")
@@ -152,7 +195,7 @@ def WorkOrderView(request):
 
             TypeRepair= work_form.cleaned_data["TypeRepair"]
 
-            WorkOrder(DeviceRepair=CustDevice[0], CustomerRepair=CustPerson[0], TypeRepair=TypeRepair, user=user, Completed=False, PickedUp=False).save()
+            WorkOrder(DeviceRepair=CustDevice[0], CustomerRepair=CustPerson[0], TypeRepair=TypeRepair, user=user, Completed=False, PickedUp=False, date=today).save()
         else:
             page_data["work_form"]=work_form
 
@@ -214,6 +257,7 @@ def WorkOrderView(request):
             page_data.get("workDict").append(row)
             page_data["toggleHeader"] = "Work Orders that have not been Completed and have not been Picked Up"
     print(page_data["toggleHeader"])
+    print(page_data["workDict"])
     return render(request, 'CustApp/WorkOrder.html', page_data)
 
 

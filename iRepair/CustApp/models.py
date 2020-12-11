@@ -19,7 +19,7 @@ class Device(models.Model):
 class WorkOrder(models.Model):
     DeviceRepair = models.ForeignKey('Device', on_delete=models.CASCADE)
     CustomerRepair = models.ForeignKey('Customer', on_delete=models.CASCADE)
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     TypeRepair = models.CharField(max_length=100)
     Completed = models.BooleanField()

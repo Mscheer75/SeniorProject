@@ -34,6 +34,10 @@
         <div class="container-fluid">
           <div class = "jumbotron" id="header">
             <div align="center">
+              <div class="ct-chartB ct-perfect-fourth"></div>
+              <div id="backdrop">
+                <a id="Actual">Number of Devices/</a>
+              </div>
 
             </div>
           </div>
@@ -43,6 +47,27 @@
         <div class="container-fluid">
           <div class = "jumbotron" id="header">
             <div align="center">
+              <h3> Devices Still in store</h3>
+              <div class="ct-chartC ct-perfect-fourth"></div>
+              <div id="backdrop">
+                <a id="NotCompleted">Not Picked Up/</a><a id="Completed">Picked Up</a>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="container-fluid">
+          <div class = "jumbotron" id="header">
+            <div align="center">
+              <h3> Devices Still in store</h3>
+              <div class="ct-chartC ct-perfect-fourth"></div>
+              <div id="backdrop">
+                <a id="NotCompleted">Not Picked Up/</a><a id="Completed">Picked Up</a>
+              </div>
+
 
             </div>
           </div>
@@ -60,32 +85,37 @@
   labelInterpolationFnc: function(value) { return value;}}]]);
 </script>
 <script>
+  new Chartist.Pie('.ct-chartC',
+  { labels: ['PickedUp', 'Not Pickedup'], series: [{{picked}}, {{NotPicked}}] },
+  { labelInterpolationFnc: function(value) { return value[0] } },
+  [['screen', { chartPadding: .001, labelOffset: 40, labelDirection: 'explode',
+  labelInterpolationFnc: function(value) { return value;}}]]);
+</script>
+<script>
 
-    lab = []
-    pro = []
-    act = []
-    {% for Description,Projected,Actual in budgetList %}
-      lab.push('{{Description}}')
-      pro.push({{Projected}})
-      act.push({{Actual}})
-    {% endfor %}
+  lab = [];
+  num = [];
+  {% for row in DevList %}
+  {% for key, value in row.items %}
+    lab.push('{{key}}');
+    console.log('{{key}}');
+    num.push({{value}});
+  {% endfor %}
+  {% endfor %}
+
   var data = {
-
-
   labels: lab,
-  series: [
-    pro,
-    act
-  ]
+  series: [num]
+
 };
 
 var options = {
-  seriesBarDistance: 10
+  seriesBarDistance: 30
 };
 
 var responsiveOptions = [
-  ['screen and (max-width: 640px)', {
-    seriesBarDistance: 5,
+  ['screen and (max-width: 800px)', {
+    seriesBarDistance: 10,
     axisX: {
       labelInterpolationFnc: function (value) {
         return value[0];
