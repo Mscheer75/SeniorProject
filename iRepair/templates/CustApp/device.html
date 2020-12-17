@@ -16,6 +16,7 @@
   		</div>
   		<div id="buttons" >
         <form method="POST" >{% csrf_token %}
+
 						{{dev_form.as_p}}
   			<button class="btn btn-primary" type="submit" name="deviceSubmit">Submit Customer</button>
       </form>

@@ -1,4 +1,5 @@
 import datetime
+import logging
 from django.shortcuts import render
 from django.http import HttpResponse
 from CustApp.forms import customerForm
@@ -14,12 +15,13 @@ from django.shortcuts import redirect
 
 # Create your views here.
 
+logger = logging.getLogger('logfile.log')
 
 @login_required(login_url='/login/')
 def cust(request):
 
     page_data = { "cust_form":customerForm}
-
+    user = request.user.username
     if(request.method == 'POST' and 'custSubmit' in request.POST):
         cust_form = customerForm(request.POST);
         if(cust_form.is_valid()):
@@ -27,6 +29,7 @@ def cust(request):
             last_Name = cust_form.cleaned_data["last_Name"]
             phone_Number= cust_form.cleaned_data["phone_Number"]
             address = cust_form.cleaned_data["address"]
+            logger.info("user {} created a customer" + user)
 
             Customer(first_name=first_Name, last_name=last_Name, phoneNumber=phone_Number, address=address).save()
         else:
@@ -98,7 +101,7 @@ def data(request):
 
 @login_required(login_url='/login/')
 def device(request):
-
+    user = request.user
     page_data = { "dev_form":deviceForm}
 
     if(request.method == 'POST' and 'deviceSubmit' in request.POST):
@@ -109,6 +112,7 @@ def device(request):
             Color= dev_form.cleaned_data["Color"]
             Device_type = dev_form.cleaned_data["Device_type"]
             Manufacture = dev_form.cleaned_data["Manufacture"]
+            logger.info("user {} created a device" + user)
             Device(Device_Name=Device_Name, Color=Color, Device_type=Device_type, Model_Number=Model_Number, Manufacture=Manufacture).save()
         else:
             dev_data["dev_form"]=dev_form
@@ -119,21 +123,28 @@ def device(request):
 
 @login_required(login_url='/login/')
 def flip(request, id):
+    user = request.user.username
+    print(user)
     temp = WorkOrder.objects.get(id=id)
     if(temp.Completed == True):
         temp.Completed = False
+        logger.warning("user {} flipped completed device {} of {} to false".format(user, temp.DeviceRepair.Device_Name, temp.CustomerRepair.last_name))
     else:
         temp.Completed = True
+        logger.warning("user {} flipped Noncompleted device {} of {} to true".format(user, temp.DeviceRepair.Device_Name, temp.CustomerRepair.last_name))
     temp.save()
     return redirect(WorkOrderView)
 
 
 @login_required(login_url='/login/')
 def flippick(request, id):
+    user = request.user.username
     temp = WorkOrder.objects.get(id=id)
     if(temp.PickedUp == True):
+        logger.warning("user {} flipped picked up device {} of {} to false".format(user, temp.DeviceRepair.Device_Name, temp.CustomerRepair.last_name))
         temp.PickedUp = False
     else:
+        logger.warning("user {} flipped picked up device {} of {} to True".format(user, temp.DeviceRepair.Device_Name, temp.CustomerRepair.last_name))
         temp.PickedUp = True
     temp.save()
     return redirect(WorkOrderView)
