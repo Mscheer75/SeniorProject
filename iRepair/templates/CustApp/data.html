@@ -62,10 +62,10 @@
         <div class="container-fluid">
           <div class = "jumbotron" id="header">
             <div align="center">
-              <h3> Devices Still in store</h3>
-              <div class="ct-chartC ct-perfect-fourth"></div>
+              <h3> Trending Data</h3>
+              <div class="ct-chartD"></div>
               <div id="backdrop">
-                <a id="NotCompleted">Not Picked Up/</a><a id="Completed">Picked Up</a>
+                <a id="NotCompleted">Trending WorkOrders</a>
               </div>
 
 
@@ -127,5 +127,30 @@ var responsiveOptions = [
 new Chartist.Bar('.ct-chartB', data, options, responsiveOptions);
 </script>
 
+<script>
+lab = [];
+num = [];
+
+{% for dateRow in dateList %}
+{% for key, value in dateRow.items %}
+  lab.push('{{key}}');
+  num.push({{value}});
+{% endfor %}
+{% endfor %}
+
+
+new Chartist.Line('.ct-chartD', {
+  labels: lab.reverse(),
+  series: [ num.reverse()
+  ]
+},{
+  width: '550px',
+  height: '200px',
+  chartPadding: {
+    right: 40
+  }
+});
+
+</script>
 </body>
 </html>

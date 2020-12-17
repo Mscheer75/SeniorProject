@@ -54,15 +54,13 @@ def data(request):
     dateNames = []
     for i in range(7):
         DateTitle = datetime.date.today() - datetime.timedelta(days=i)
+        dateRow[str(DateTitle)] = 0
         for item in workList:
-            if( str(item.date) == str(DateTitle) and str(item.date) in dateNames):
+            if( str(item.date) == str(DateTitle) and str(item.date) in dateRow):
                 dateRow[str(item.date)] += 1
             elif(str(item.date) == str(DateTitle)):
                 dateNames.append(str(DateTitle))
                 dateRow[str(curDate)] = 1
-
-
-    print(dateNames)
 
     for item in workList:
         if(item.Completed == True):
@@ -256,8 +254,6 @@ def WorkOrderView(request):
         elif((userProf.profile_setting_1 == True and record.Completed == False) and (userProf.profile_setting_2 == True and record.PickedUp == False)):
             page_data.get("workDict").append(row)
             page_data["toggleHeader"] = "Work Orders that have not been Completed and have not been Picked Up"
-    print(page_data["toggleHeader"])
-    print(page_data["workDict"])
     return render(request, 'CustApp/WorkOrder.html', page_data)
 
 
